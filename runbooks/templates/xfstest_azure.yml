@@ -1,0 +1,104 @@
+name: $(test_name)
+extension:
+  - ../testsuites
+variable:
+  - name: location
+    value: "northeurope"
+  - name: keep_environment
+    value: "no"
+  - name: build_vm_resource_group_name
+    value: ""
+  - name: marketplace_image
+    value: ""
+  - name: vhd
+    value: ""
+  - name: shared_gallery
+    value: ""
+  - name: community_gallery_image
+    value: ""
+  - name: vhd
+    value: ""
+  - name: vm_size
+    value: ""
+  - name: test_name
+    value: "azfiles-xfstest"
+  - name: deploy
+    value: true
+  - name: wait_delete
+    value: false
+  - name: concurrency
+    value: 5
+  - name: admin_private_key_file
+    value: ""
+    is_secret: true
+  - name: admin_password
+    value: ""
+    is_secret: true
+  - name: subscription_id
+    value: ""
+  - name: fs_sku
+    is_case_visible: True
+    value: "Premium_LRS"
+  - name: fs_kind
+    is_case_visible: True
+    value: "FileStorage"
+  - name: mount_options
+    is_case_visible: True
+    value: "vers=3.0,dir_mode=0777,file_mode=0777,sec=ntlmssp,mfsymlinks,sign"
+  - name: enable_private_endpoint
+    is_case_visible: True
+    value: True
+  - name: test_cases
+    is_case_visible: True
+    value: "generic/088 generic/001 generic/005 generic/123 generic/129"
+  - name: fs_protocols
+    is_case_visible: True
+    value: ["SMB"]
+  - name: public_address
+    value: ""
+  - name: public_port
+    value: 22
+  - name: user_name
+    value: "lisatest"
+  - name: azure_arm_access_token
+    value: ""
+concurrency: $(concurrency)
+notifier:
+  - type: html
+  - type: env_stats
+  - type: junit
+    include_subtest: true
+    include_passed_messages: true
+    include_failed_messages: true
+    include_skipped_messages: true
+platform:
+  - type: azure
+    admin_private_key_file: $(admin_private_key_file)
+    keep_environment: $(keep_environment)
+    azure:
+      resource_group_name: $(build_vm_resource_group_name)
+      deploy: $(deploy)
+      subscription_id: $(subscription_id)
+      wait_delete: $(wait_delete)
+      azure_arm_access_token: $(azure_arm_access_token)
+    requirement:
+      core_count:
+        min: 2
+      disk:
+        os_disk_size: 64
+        os_disk_type: "PremiumSSDLRS"
+      azure:
+        hyperv_generation: 2
+        shared_gallery: $(shared_gallery)
+        community_gallery_image: $(community_gallery_image)
+        marketplace: $(marketplace_image)
+        vhd: $(vhd)
+        location: $(location)
+        vm_size: $(vm_size)
+testcase:
+  - criteria:
+      priority: 0
+    enabled: True
+  - criteria:
+      priority: 1
+    enabled: True
