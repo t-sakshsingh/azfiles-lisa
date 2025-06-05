@@ -1845,10 +1845,10 @@ def check_or_create_resource_group(
             )
         if not az_shared_rg_exists:
             log.info(f"Creating Resource group: '{resource_group_name}'")
-
             rg_properties: Dict[str, Any] = {"location": location}
             if resource_group_tags:
                 rg_properties["tags"] = resource_group_tags
+            
             if managed_by:
                 log.debug(f"Using managed_by resource group: '{managed_by}'")
                 rg_properties["managed_by"] = managed_by
