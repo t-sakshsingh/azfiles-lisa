@@ -39,6 +39,8 @@ variable:
     value: "default"
   - name: use_ipv6
     value: false
+  - name: HDFSOwner
+    value: "HDFSOwner"
 concurrency: $(concurrency)
 notifier:
   - type: html
@@ -58,6 +60,8 @@ platform:
       wait_delete: $(wait_delete)
       azcopy_path: $(azcopy_path)
       use_ipv6: $(use_ipv6)
+      resource_group_tags:
+        HDFSOwner: $(HDFSOwner)
     requirement:
       core_count:
         min: 2
